@@ -1,6 +1,7 @@
 package com.scottlogic.leaderboardtesting;
 
 import org.junit.Test;
+import org.springframework.validation.BindingResult;
 
 import static org.mockito.Mockito.*;
 
@@ -44,7 +45,7 @@ public class HighScoreControllerTest {
         HighScoreController controller = new HighScoreController(mockRepo);
         HighScore highScore = new HighScore("test", "test", 1);
 
-        controller.post(highScore);
+        controller.post(highScore, mock(BindingResult.class));
 
         verify(mockRepo).add(eq(highScore));
     }

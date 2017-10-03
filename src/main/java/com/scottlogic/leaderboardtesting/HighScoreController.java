@@ -1,6 +1,8 @@
 package com.scottlogic.leaderboardtesting;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -32,7 +34,10 @@ public class HighScoreController {
     }
 
     @RequestMapping(value = "/highscores", method = RequestMethod.POST)
-    public void post(@RequestBody HighScore highScore) {
+    public void post(@RequestBody @Validated HighScore highScore, BindingResult bindingResultt) {
+        if(bindingResultt.hasErrors()) {
+            throw new IllegalArgumentException();
+        }
         highScoreRepository.add(highScore);
     }
 }

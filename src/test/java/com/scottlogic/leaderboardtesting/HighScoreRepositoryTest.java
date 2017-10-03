@@ -79,44 +79,4 @@ public class HighScoreRepositoryTest {
         Collection<HighScore> expectedHighScores = Arrays.asList(score3, score2, score1);
         Assert.assertEquals(expectedHighScores, highScores);
     }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void add_rejects_HighScore_With_Null_UserName() {
-        HighScore score = new HighScore(null, "Test", 1);
-
-        HighScoreRepository repository = new HighScoreRepository();
-        repository.add(score);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void add_rejects_HighScore_With_Empty_UserName() {
-        HighScore score = new HighScore("", "Test", 1);
-
-        HighScoreRepository repository = new HighScoreRepository();
-        repository.add(score);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void add_rejects_HighScore_With_Null_GameName() {
-        HighScore score = new HighScore("Test", null, 1);
-
-        HighScoreRepository repository = new HighScoreRepository();
-        repository.add(score);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void add_rejects_HighScore_With_Empty_GameName() {
-        HighScore score = new HighScore("Test", "", 1);
-
-        HighScoreRepository repository = new HighScoreRepository();
-        repository.add(score);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void add_rejects_HighScore_With_Null_Value() {
-        HighScore score = new HighScore("Test", "Test", null);
-
-        HighScoreRepository repository = new HighScoreRepository();
-        repository.add(score);
-    }
 }

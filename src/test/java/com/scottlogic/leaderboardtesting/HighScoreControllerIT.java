@@ -2,9 +2,11 @@ package com.scottlogic.leaderboardtesting;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -21,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { TestApplicationConfig.class })
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @WebAppConfiguration
 public class HighScoreControllerIT {
 
@@ -75,12 +78,40 @@ public class HighScoreControllerIT {
     }
 
     @Test
+    public void post_With_Empty_GameName_Returns_400() throws Exception {
+        RequestBuilder request = post("/api/highscores")
+                .content("{\n" +
+                        "\t\"value\": 1,\n" +
+                        "\t\"gameName\": \"\",\n" +
+                        "\t\"userName\": \"test\"\n" +
+                        "}")
+                .header("Content-Type", "application/json");
+        MvcResult mvcResult = this.mockMvc.perform(request)
+                .andDo(print()).andExpect(status().isBadRequest())
+                .andReturn();
+    }
+
+    @Test
     public void post_With_Invalid_UserName_Returns_400() throws Exception {
         RequestBuilder request = post("/api/highscores")
                 .content("{\n" +
                         "\t\"value\": 20, \n" +
                         "\t\"gameName\": \"test\", \n" +
                         "\t\"userName\": null\n" +
+                        "}")
+                .header("Content-Type", "application/json");
+        MvcResult mvcResult = this.mockMvc.perform(request)
+                .andDo(print()).andExpect(status().isBadRequest())
+                .andReturn();
+    }
+
+    @Test
+    public void post_With_Empty_UserName_Returns_400() throws Exception {
+        RequestBuilder request = post("/api/highscores")
+                .content("{\n" +
+                        "\t\"value\": 1,\n" +
+                        "\t\"gameName\": \"test\",\n" +
+                        "\t\"userName\": \"\"\n" +
                         "}")
                 .header("Content-Type", "application/json");
         MvcResult mvcResult = this.mockMvc.perform(request)

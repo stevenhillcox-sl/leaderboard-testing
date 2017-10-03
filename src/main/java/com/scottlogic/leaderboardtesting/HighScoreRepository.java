@@ -39,22 +39,6 @@ public class HighScoreRepository {
     }
 
     public void add(HighScore newHighScore) {
-        if(newHighScore.getValue() == null) {
-            throw new IllegalArgumentException("High score value can not be null");
-        }
-
-        if(newHighScore.getGameName() == null || newHighScore.getGameName().isEmpty()) {
-            throw new IllegalArgumentException("High score game name can not be null or empty");
-        }
-
-        if(newHighScore.getUserName() == null || newHighScore.getUserName().isEmpty()) {
-            throw new IllegalArgumentException("High score user name can not be null or empty");
-        }
-
-        if(newHighScore.getValue() > 50) {
-            throw new IllegalArgumentException("High score can not exceed 50");
-        }
-
         this.highScores.add(newHighScore);
     }
 }
