@@ -39,7 +39,11 @@ public class HighScoreControllerIT {
             .andDo(print()).andExpect(status().isOk())
             .andReturn();
 
+        String expectedResponse = "[{\"userName\":\"Test2\",\"gameName\":\"Test2\",\"value\":27},{\"userName\":\"Test1\",\"gameName\":\"Test1\",\"value\":20},{\"userName\":\"Test3\",\"gameName\":\"Test3\",\"value\":12}]";
+        String response = mvcResult.getResponse().getContentAsString();
+
         Assert.assertEquals("application/json;charset=UTF-8", mvcResult.getResponse().getContentType());
+        Assert.assertEquals(expectedResponse, response);
     }
 
     @Test
